@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigidBody;
+    Animator animator;
 
     public float speed = 5.0f;
     public float jumpForce = 8.0f;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         // get the extent of the collision box
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,6 +28,9 @@ public class PlayerController : MonoBehaviour
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
             transform.localScale = new Vector3(-transform.localScale.x,
            transform.localScale.y, transform.localScale.z);
+
+        float xSpeed = Mathf.Abs(rigidBody.velocity.x);
+        animator.SetFloat("xspeed", xSpeed);
     }
 
     void FixedUpdate()
